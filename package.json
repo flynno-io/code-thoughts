@@ -1,0 +1,25 @@
+{
+  "name": "code-thoughts",
+  "version": "1.0.0",
+  "description": "Headless web application for managing a social coder network of thoughts.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "web-application",
+    "server",
+    "NoSQL"
+  ],
+  "author": "Luke L. Flynn",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2",
+    "mongoose": "^8.9.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/mongoose": "^5.11.96",
+    "typescript": "^5.7.2"
+  }
+}
