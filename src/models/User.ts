@@ -1,10 +1,10 @@
 // src/models/User.ts
 
 import { Schema, Types, model, type Document } from "mongoose"
-import Thought from "./Thought"
+import Thought from "./Thought.js"
 
 // User interface
-interface IUser extends Document {
+export interface IUser extends Document {
 	username: string
 	email: string
 	thoughts: Types.ObjectId[]

@@ -1,6 +1,6 @@
 import express from "express"
 import db from "./config/connection.js"
-import routes from "./routes"
+import routes from "./routes/index.js"
 
 // Start the Mongoose database
 await db()

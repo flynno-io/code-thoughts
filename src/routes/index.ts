@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import apiRoutes from './api'
+import apiRoutes from './api/index.js'
 
 // Initialize the Express Router middleware
 const router = Router()

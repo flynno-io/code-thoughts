@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "Headless web application for managing a social coder network of thoughts.",
   "main": "server.js",
+  "type": "module",
   "scripts": {
+    "build": "npx tsc",
+    "seed": "node dist/seeds/index.js",
+    "start": "npm run build && node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
