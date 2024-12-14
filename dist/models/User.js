@@ -38,6 +38,9 @@ const userSchema = new Schema({
 userSchema.virtual("friendCount").get(function () {
     return this.friends.length;
 });
+userSchema.virtual("thoughtCount").get(function () {
+    return this.thoughts.length;
+});
 // BONUS: Add 'pre' middleware to delete a users associated thoughts when the user is deleted
 // Function to delete associated thoughts given the user to be deleted
 async function deleteAssociatedThoughts(user) {
