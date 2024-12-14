@@ -6,7 +6,7 @@ import { Thought, User } from "../models/index.js"
 // Retrieve all thoughts -> GET /thoughts
 export const getThoughts = async (_: Request, res: Response) => {
 	try {
-		const thoughts = await Thought.find()
+		const thoughts = await Thought.find().select("-__v")
 		res.json(thoughts)
 	} catch (error) {
 		res.status(500).json(error)
@@ -17,11 +17,11 @@ export const getThoughts = async (_: Request, res: Response) => {
 export const createThought = async (req: Request, res: Response) => {
 	try {
 		const thought = await Thought.create(req.body)
-		const user = await User.findByIdAndUpdate(
-			{ _id: req.body.userId },
-			{ $push: { thoughts: thought._id } },
-			{ new: true }
-		)
+    const user = await User.findOneAndUpdate(
+      { username: req.body.username },
+      { $push: { thoughts: thought._id } },
+      { new: true }
+    )
     if (!user) {
       res.status(404).json({ message: "No user with this Id" })
     } else {
@@ -38,7 +38,7 @@ export const createThought = async (req: Request, res: Response) => {
 export const getSingleThought = async (req: Request, res: Response) => {
 	const { thoughtId } = req.params
 	try {
-		const thought = await Thought.findById(thoughtId)
+		const thought = await Thought.findById(thoughtId).select("-__v")
 		if (thought) {
 			res.json(thought)
 		} else {
@@ -60,7 +60,7 @@ export const updateThought = async (req: Request, res: Response) => {
       { _id: req.params.thoughtId },
       { $set: req.body },
       { runValidators: true, new: true }
-    )
+    ).select("-__v")
     if (!thought) {
       res.status(404).json({ message: "No thought with this Id" })
     } else {
@@ -74,7 +74,7 @@ export const updateThought = async (req: Request, res: Response) => {
 // Remove a single thought -> DELETE /thoughts/:thoughtId
 export const removeThought = async (req: Request, res: Response) => {
   try {
-    const thought = await Thought.findOneAndDelete({ _id: req.params.thoughtId })
+    const thought = await Thought.findOneAndDelete({ _id: req.params.thoughtId }).select("-__v")
     if (!thought) {
       res.status(404).json({ message: "No thought with this Id" })
     } else {
@@ -92,7 +92,7 @@ export const addReaction = async (req: Request, res: Response) => {
       { _id: req.params.thoughtId },
       { $push: { reactions: req.body } },
       { runValidators: true, new: true }
-    )
+    ).select("-__v")
     if (!thought) {
       res.status(404).json({ message: "No thought with this Id" })
     } else {
@@ -110,7 +110,7 @@ export const removeReaction = async (req: Request, res: Response) => {
       { _id: req.params.thoughtId },
       { $pull: { reactions: { reactionId: req.body.reactionId } } },
       { runValidators: true, new: true }
-    )
+    ).select("-__v")
     if (!thought) {
       res.status(404).json({ message: "No thought with this Id" })
     } else {

@@ -12,25 +12,41 @@ export interface IUser extends Document {
 }
 
 // User schema
-const userSchema = new Schema<IUser>({
-	username: {
-		type: String,
-		required: true,
-		unique: true,
-		trim: true,
+const userSchema = new Schema<IUser>(
+	{
+		username: {
+			type: String,
+			required: true,
+			unique: true,
+			trim: true,
+		},
+		email: {
+			type: String,
+			required: true,
+			unique: true,
+			match: [/.+@.+\..+/, "Please enter a valid e-mail address ({VALUE})"],
+		},
+		thoughts: {
+			type: [{ type: Schema.Types.ObjectId, ref: "Thought" }],
+			default: [],
+		},
+		friends: [{ type: Schema.Types.ObjectId, ref: "User" }],
 	},
-	email: {
-		type: String,
-		required: true,
-		unique: true,
-		match: [/.+@.+\..+/, "Please enter a valid e-mail address ({VALUE})"],
-	},
-	thoughts: {
-		type: [{ type: Schema.Types.ObjectId, ref: "Thought" }],
-		default: [],
-	},
-	friends: [{ type: Schema.Types.ObjectId, ref: "User" }],
-})
+	{
+		toJSON: {
+			virtuals: true,
+			getters: true,
+			transform: (_, ret) => {
+				delete ret.id // Remove virtual 'id' field
+				return ret
+			},
+		},
+		toObject: {
+			virtuals: true,
+			getters: true,
+		},
+	}
+)
 
 // Create a virtual called friendCount that retrieves the length of the user's friends array field on query
 userSchema.virtual("friendCount").get(function (this: IUser): number {

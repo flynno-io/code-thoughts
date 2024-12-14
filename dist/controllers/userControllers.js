@@ -3,7 +3,7 @@ import { User } from "../models/index.js";
 // Retrieve all users -> GET /users
 export const getUsers = async (_, res) => {
     try {
-        const users = await User.find();
+        const users = await User.find().select("-__v");
         res.json(users);
     }
     catch (error) {
@@ -26,7 +26,10 @@ export const createUser = async (req, res) => {
 export const getSingleUser = async (req, res) => {
     const { userId } = req.params;
     try {
-        const user = await User.findById(userId);
+        const user = await User.findById(userId)
+            .populate('thoughts')
+            .populate('friends')
+            .select("-__v");
         if (user) {
             res.json(user);
         }
@@ -45,7 +48,7 @@ export const getSingleUser = async (req, res) => {
 // Update a single user -> PUT /users/:userId
 export const updateUser = async (req, res) => {
     try {
-        const user = await User.findOneAndUpdate({ _id: req.params.userId }, { $set: req.body }, { runValidators: true, new: true });
+        const user = await User.findOneAndUpdate({ _id: req.params.userId }, { $set: req.body }, { runValidators: true, new: true }).select("-__v");
         if (!user) {
             res.status(404).json({ message: "No user with this Id" });
         }
@@ -58,7 +61,7 @@ export const updateUser = async (req, res) => {
 // Remove a single user -> DELETE /users/:userId
 export const removeUser = async (req, res) => {
     try {
-        const user = await User.findOneAndDelete({ _id: req.params.userId });
+        const user = await User.findOneAndDelete({ _id: req.params.userId }).select("-__v");
         if (!user) {
             res.status(400).json({ message: "No user with that ID" });
         }
@@ -82,7 +85,7 @@ export const addFriend = async (req, res) => {
         }, {
             runValidators: true,
             new: true,
-        });
+        }).select("-__v");
         if (!user) {
             res.status(404).json({ message: "No user with this Id" });
         }
@@ -104,7 +107,7 @@ export const removeFriend = async (req, res) => {
         }, {
             runValidators: true,
             new: true,
-        });
+        }).select("-__v");
         if (!user) {
             res.status(404).json({ message: "No user with this Id" });
         }

@@ -51,11 +51,18 @@ const thoughtSchema = new Schema({
         type: String,
         required: true,
     },
-    reactions: [reactionSchema],
+    reactions: {
+        type: [reactionSchema],
+        default: [],
+    },
 }, {
     toJSON: {
         virtuals: true,
         getters: true,
+        transform: (_, ret) => {
+            delete ret.id; // Remove virtual 'id' field
+            return ret;
+        },
     },
     toObject: {
         virtuals: true,

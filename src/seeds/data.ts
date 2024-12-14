@@ -125,7 +125,7 @@ export function generateRandomThoughts(int: number, userId: Types.ObjectId, user
       thoughtText: thoughts[Math.floor(Math.random() * thoughts.length)],
       username: username,
       userId: userId,
-      reactions: generateRandomReactions(Math.floor(Math.random() * 3)),
+      reactions: generateRandomReactions(Math.floor(Math.random() * 5)),
     })
   }
   return generatedThoughts

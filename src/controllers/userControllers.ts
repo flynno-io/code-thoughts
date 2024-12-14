@@ -6,7 +6,7 @@ import { User } from "../models/index.js"
 // Retrieve all users -> GET /users
 export const getUsers = async (_: Request, res: Response) => {
 	try {
-		const users = await User.find()
+		const users = await User.find().select("-__v")
 		res.json(users)
 	} catch (error) {
 		res.status(500).json(error)
@@ -29,7 +29,10 @@ export const createUser = async (req: Request, res: Response) => {
 export const getSingleUser = async (req: Request, res: Response) => {
 	const { userId } = req.params
 	try {
-		const user = await User.findById(userId)
+		const user = await User.findById(userId) 
+      .populate('thoughts')
+      .populate('friends')
+      .select("-__v")
 		if (user) {
 			res.json(user)
 		} else {
@@ -51,7 +54,7 @@ export const updateUser = async (req: Request, res: Response) => {
 			{ _id: req.params.userId },
 			{ $set: req.body },
 			{ runValidators: true, new: true }
-		)
+		).select("-__v")
 
 		if (!user) {
 			res.status(404).json({ message: "No user with this Id" })
@@ -66,7 +69,7 @@ export const updateUser = async (req: Request, res: Response) => {
 // Remove a single user -> DELETE /users/:userId
 export const removeUser = async (req: Request, res: Response) => {
 	try {
-		const user = await User.findOneAndDelete({ _id: req.params.userId })
+		const user = await User.findOneAndDelete({ _id: req.params.userId }).select("-__v")
 		if (!user) {
 			res.status(400).json({ message: "No user with that ID" })
 		} else {
@@ -91,13 +94,13 @@ export const addFriend = async (req: Request, res: Response) => {
 			},
 			{
 				runValidators: true,
-        new: true,
+				new: true,
 			}
-		)
-    if (!user) {
-      res.status(404).json({ message: "No user with this Id" })
-    }
-    res.json(user)
+		).select("-__v")
+		if (!user) {
+			res.status(404).json({ message: "No user with this Id" })
+		}
+		res.json(user)
 	} catch (error: any) {
 		res.status(400).json({ message: error.message })
 	}
@@ -117,13 +120,13 @@ export const removeFriend = async (req: Request, res: Response) => {
 			},
 			{
 				runValidators: true,
-        new: true,
+				new: true,
 			}
-		)
-    if (!user) {
-      res.status(404).json({ message: "No user with this Id" })
-    }
-    res.json(user)
+		).select("-__v")
+		if (!user) {
+			res.status(404).json({ message: "No user with this Id" })
+		}
+		res.json(user)
 	} catch (error: any) {
 		res.status(400).json({ message: error.message })
 	}

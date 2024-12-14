@@ -20,6 +20,19 @@ const userSchema = new Schema({
         default: [],
     },
     friends: [{ type: Schema.Types.ObjectId, ref: "User" }],
+}, {
+    toJSON: {
+        virtuals: true,
+        getters: true,
+        transform: (_, ret) => {
+            delete ret.id; // Remove virtual 'id' field
+            return ret;
+        },
+    },
+    toObject: {
+        virtuals: true,
+        getters: true,
+    },
 });
 // Create a virtual called friendCount that retrieves the length of the user's friends array field on query
 userSchema.virtual("friendCount").get(function () {
