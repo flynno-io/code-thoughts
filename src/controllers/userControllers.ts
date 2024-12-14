@@ -76,3 +76,42 @@ export const removeUser = async (req: Request, res: Response) => {
 		res.status(500).json({ message: error.message })
 	}
 }
+
+// Add a friend -> GET /users/:userId/friends/:friendId
+export const addFriend = async (req: Request, res: Response) => {
+  try {
+    const user = await User.findOneAndUpdate({
+    // TODO: add validation to check if user is a valid user
+      _id: req.params.userId
+    }, {
+      $addToSet: {
+        friends: req.params.friendId
+      }
+      // TODO: add validation to check if friendId is a valid user
+    }, {
+      new: true
+    })
+
+  } catch (error: any) {
+    res.status(400).json({ message: error.message })
+  }
+}
+
+// Remove a friend -> DELETE /users/:userId/friends/:friendId
+export const removeFriend = async (req: Request, res: Response) => {
+  try {
+    const user = await User.findOneAndUpdate({
+      // TODO: add validation to check if user is a valid user
+      _id: req.params.userId
+    }, {
+      $pull: {
+        friends: req.params.friendId
+      }
+      // TODO: add validation to check if friendId is a valid user
+    }, {
+      new: true
+    })
+  } catch (error: any) {
+    res.status(400).json({ message: error.message })
+  }
+}
