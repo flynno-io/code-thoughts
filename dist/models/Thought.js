@@ -58,14 +58,22 @@ const thoughtSchema = new Schema({
 }, {
     toJSON: {
         virtuals: true,
+        versionKey: false, // Exclude the `__v` field
         getters: true,
         transform: (_, ret) => {
-            delete ret.id; // Remove virtual 'id' field
-            return ret;
+            return {
+                id: ret.id,
+                username: ret.username,
+                thoughtText: ret.thoughtText,
+                reactionCount: ret.reactionCount,
+                reactions: ret.reactions,
+                createdAt: ret.createdAt,
+            };
         },
     },
     toObject: {
         virtuals: true,
+        versionKey: false, // Exclude the `__v` field
         getters: true,
     },
 });

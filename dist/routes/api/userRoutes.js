@@ -4,7 +4,7 @@ const router = Router();
 // api/users
 router.route('/')
     .get(getUsers) // Get all users
-    .put(createUser); // Create a new user
+    .post(createUser); // Create a new user
 // api/users/:userId
 router.route('/:userId')
     .get(getSingleUser) // Get a single user

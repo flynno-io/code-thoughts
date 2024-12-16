@@ -7,7 +7,8 @@ import { User } from "../models/index.js"
 export const getUsers = async (_: Request, res: Response) => {
 	try {
 		const users = await User.find().select("-__v")
-		res.json(users)
+    const totalUsers = users.length
+		res.json({ totalUsers, users: [...users] }) // Return the total number of users and the users
 	} catch (error) {
 		res.status(500).json(error)
 	}
@@ -73,7 +74,7 @@ export const removeUser = async (req: Request, res: Response) => {
 		if (!user) {
 			res.status(400).json({ message: "No user with that ID" })
 		} else {
-			res.json({ message: "User and thoughts are deleted!" })
+			res.json({ message: "User and thoughts deleted!" })
 		}
 	} catch (error: any) {
 		res.status(500).json({ message: error.message })

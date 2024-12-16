@@ -15,7 +15,7 @@ const router = Router()
 router
 	.route("/")
 	.get(getThoughts) // Get all thoughts
-	.put(createThought) // Create a new thought
+	.post(createThought) // Create a new thought
 
 // api/thoughts/:thoughtId
 router
