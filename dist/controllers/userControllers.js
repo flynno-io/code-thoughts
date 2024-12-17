@@ -74,7 +74,7 @@ export const removeUser = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
-// Add a friend -> GET /users/:userId/friends/:friendId
+// Add a friend -> POST /users/:userId/friends/:friendId
 export const addFriend = async (req, res) => {
     try {
         const user = await User.findOneAndUpdate({

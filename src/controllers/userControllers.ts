@@ -81,7 +81,7 @@ export const removeUser = async (req: Request, res: Response) => {
 	}
 }
 
-// Add a friend -> GET /users/:userId/friends/:friendId
+// Add a friend -> POST /users/:userId/friends/:friendId
 export const addFriend = async (req: Request, res: Response) => {
 	try {
 		const user = await User.findOneAndUpdate(

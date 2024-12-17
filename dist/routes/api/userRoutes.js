@@ -11,5 +11,5 @@ router.route('/:userId')
     .put(updateUser) // Update a single user
     .delete(removeUser); // Remove a single user
 // api/users/:userId/friends/:friendId
-router.route('/:userId/friends/:friendId').get(addFriend).delete(removeFriend);
+router.route('/:userId/friends/:friendId').post(addFriend).delete(removeFriend);
 export { router as userRouter };
