@@ -11,7 +11,7 @@ Allow Coders to share thoughts on other coders thoughts
 - [Description](#description)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Demo] (#Demo)
+- [Demo](#Demo)
 - [Features](#features)
 - [Credits](#credits)
 - [Questions](#questions)
