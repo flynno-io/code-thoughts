@@ -11,6 +11,7 @@ Allow Coders to share thoughts on other coders thoughts
 - [Description](#description)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Demo] (#Demo)
 - [Features](#features)
 - [Credits](#credits)
 - [Questions](#questions)
@@ -20,6 +21,9 @@ Copy the repo and run 1) npm install && npm build && npm seed && npm run start
 
 ## Usage
 The web application is a headless website so only Restful (REST) APIs are available to see the functionality of the application.
+
+## Demo
+Please take a look at the [demo](https://drive.google.com/file/d/1MIHspdS0WmgoiZzPt5i_N7hF5jPRitWN/view?usp=sharing) of the headless web application (API)
 
 ## Credits
 I welcome contributions to our project. Please see the [Contributing](#contributing) section.
